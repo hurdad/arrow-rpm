@@ -2,7 +2,7 @@ Name:           apache-arrow
 Version:        %{VERSION}
 Release:        1%{?dist}
 Summary:        Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
-Group:      	  System Environment/Libraries
+Group:          System Environment/Libraries
 License:        Apache 2.0
 URL:            https://arrow.apache.org/
 Source:         %{name}-%{version}.tar.gz      
