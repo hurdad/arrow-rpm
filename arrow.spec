@@ -1,17 +1,18 @@
 Name:           apache-arrow
-Version:    	%{VERSION}
+Version:    	  %{VERSION}
 Release:        1%{?dist}
 Summary:        Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
-Group:      	System Environment/Libraries
-License:    	Apache 2.0
+Group:      	  System Environment/Libraries
+License:    	  Apache 2.0
 URL:            https://arrow.apache.org/
-Source:     	%{name}-%{version}.tar.gz      
+Source:     	  %{name}-%{version}.tar.gz      
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires:  boost-static
 BuildRequires:  boost-devel
 BuildRequires:  gcc-c++ 
 BuildRequires:  cmake 
-AutoReqProv: 	no
+Requires:       boost-filesystem
+AutoReqProv:    no
 
 %description
 Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
