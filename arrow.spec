@@ -17,47 +17,67 @@ AutoReqProv:    no
 %description
 Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
 
-%package devel
-Summary:	%{name} development package
+%package java
+Summary:	%{name} java development package
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
 
-%description devel
-Development files for %{name}.
+%description java
+Java Development files for %{name}.
+
+%package cpp
+Summary:	%{name} c++ development package
+Group:		Development/Libraries
+
+%description cpp
+C++ Shared Object files for %{name}.
+
+%package cpp-devel
+Summary:	%{name} c++ development package
+Group:		Development/Libraries
+Requires:	%{name}-cpp = %{version}
+
+%description cpp-devel
+C++ Development files for %{name}.
 
 %prep
-%setup -n arrow-%{name}-%{version}/cpp/
+%setup -n arrow-%{name}-%{version}
 
 %build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
-make %{?_smp_mflags}
+cd %{_builddir}/arrow-%{name}-%{version}/java && mvn install
+cd %{_builddir}/arrow-%{name}-%{version}/cpp && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr && make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+cd cpp && make install DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT/usr/lib $RPM_BUILD_ROOT/usr/lib64
-rm -rf $RPM_BUILD_ROOT/home
+mkdir -p $RPM_BUILD_ROOT/usr/share/java/arrow/
+cp %{_builddir}/arrow-%{name}-%{version}/java/format/target/arrow-format-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
+cp %{_builddir}/arrow-%{name}-%{version}/java/memory/target/arrow-memory-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
+cp %{_builddir}/arrow-%{name}-%{version}/java/tools/target/arrow-tools-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
+cp %{_builddir}/arrow-%{name}-%{version}/java/vector/target/arrow-vector-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%post cpp
 ldconfig
 
-%postun
+%postun cpp
 ldconfig
 
-%files
+%files java
+%defattr(-,root,root,-)
+/usr/share/java/arrow/
+
+%files cpp
 %defattr(-,root,root,-)
 %doc README.md
-%{_libdir}/libarrow_*.so
+%{_libdir}/libarrow.so.*
 %{_libdir}/libarrow.so
 
-%files devel
+%files cpp-devel
 %defattr(-,root,root,-)
 %{_includedir}
-%{_libdir}/libarrow_*.a
 %{_libdir}/libarrow.a
 %{_libdir}/pkgconfig
 
