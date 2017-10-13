@@ -1,6 +1,6 @@
 # Parquet-cpp
 SHELL := /bin/bash 
-version = 0.7.1
+version = 0.7.0
 name = arrow
 full_name = $(name)-$(version)
 download_url = "https://github.com/apache/$(name)/archive/apache-$(full_name).tar.gz"

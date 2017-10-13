@@ -1,3 +1,5 @@
+
+%define __jar_repack %{nil}
 Name:           apache-arrow
 Version:        %{VERSION}
 Release:        1%{?dist}
@@ -12,6 +14,7 @@ BuildRequires:  boost-devel
 BuildRequires:  gcc-c++ 
 BuildRequires:  cmake 
 Requires:       boost-filesystem
+Requires:	boost-system
 AutoReqProv:    no
 
 %description
