@@ -20,12 +20,6 @@ AutoReqProv:    no
 %description
 Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
 
-%package java
-Summary:	%{name} java development package
-Group:		Development/Libraries
-
-%description java
-Java Development files for %{name}.
 
 %package cpp
 Summary:	%{name} c++ development package
@@ -46,18 +40,11 @@ C++ Development files for %{name}.
 %setup -n arrow-%{name}-%{version}
 
 %build
-cd %{_builddir}/arrow-%{name}-%{version}/java && mvn install
 cd %{_builddir}/arrow-%{name}-%{version}/cpp && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr && make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 cd cpp && make install DESTDIR=$RPM_BUILD_ROOT
-
-mkdir -p $RPM_BUILD_ROOT/usr/share/java/arrow/
-cp %{_builddir}/arrow-%{name}-%{version}/java/format/target/arrow-format-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
-cp %{_builddir}/arrow-%{name}-%{version}/java/memory/target/arrow-memory-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
-cp %{_builddir}/arrow-%{name}-%{version}/java/tools/target/arrow-tools-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
-cp %{_builddir}/arrow-%{name}-%{version}/java/vector/target/arrow-vector-%{version}.jar $RPM_BUILD_ROOT/usr/share/java/arrow/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -67,10 +54,6 @@ ldconfig
 
 %postun cpp
 ldconfig
-
-%files java
-%defattr(-,root,root,-)
-/usr/share/java/arrow/
 
 %files cpp
 %defattr(-,root,root,-)
