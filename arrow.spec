@@ -1,5 +1,4 @@
-
-%define __jar_repack %{nil}
+%define debug_package %{nil}
 Name:           apache-arrow
 Version:        %{VERSION}
 Release:        1%{?dist}
@@ -19,7 +18,6 @@ AutoReqProv:    no
 
 %description
 Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
-
 
 %package cpp
 Summary:	%{name} c++ development package
@@ -41,6 +39,7 @@ C++ Development files for %{name}.
 
 %build
 cd %{_builddir}/arrow-%{name}-%{version}/cpp && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr && make %{?_smp_mflags}
+make unittest
 
 %install
 rm -rf $RPM_BUILD_ROOT
