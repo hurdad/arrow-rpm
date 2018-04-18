@@ -1,4 +1,4 @@
-# Parquet-cpp
+# arrow
 SHELL := /bin/bash 
 version = 0.9.0
 name = arrow
