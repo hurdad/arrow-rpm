@@ -26,6 +26,13 @@ Group:		Development/Libraries
 %description cpp
 C++ Shared Object files for %{name}.
 
+%package cpp-gpu
+Summary:	%{name} c++ gpu development package
+Group:		Development/Libraries
+
+%description cpp-gpu
+GPU C++ Shared Object files for %{name}.
+
 %package cpp-devel
 Summary:	%{name} c++ development package
 Group:		Development/Libraries
@@ -38,7 +45,7 @@ C++ Development files for %{name}.
 %setup -n arrow-%{name}-%{version}
 
 %build
-cd %{_builddir}/arrow-%{name}-%{version}/cpp && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr && make %{?_smp_mflags}
+cd %{_builddir}/arrow-%{name}-%{version}/cpp && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DARROW_GPU=ON && make %{?_smp_mflags}
 
 %check
 cd cpp && make unittest
@@ -59,13 +66,18 @@ ldconfig
 %files cpp
 %defattr(-,root,root,-)
 %doc README.md
-%{_libdir}/libarrow.so.*
-%{_libdir}/libarrow.so
+%{_libdir}/libarrow.so*
+
+%files cpp-gpu
+%defattr(-,root,root,-)
+%doc README.md
+%{_libdir}/libarrow_gpu.so*
 
 %files cpp-devel
 %defattr(-,root,root,-)
 %{_includedir}
 %{_libdir}/libarrow.a
-%{_libdir}/pkgconfig
+%{_libdir}/libarrow_gpu.a
+%{_libdir}/pkgconfig/*
 
 %changelog
