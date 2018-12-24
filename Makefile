@@ -1,6 +1,6 @@
-# arrow
-SHELL := /bin/bash 
-version = 0.9.0
+# arrow	 
+version = 0.11.0
+release = 1
 name = arrow
 full_name = $(name)-$(version)
 download_url = "https://github.com/apache/$(name)/archive/apache-$(full_name).tar.gz"
@@ -31,4 +31,5 @@ rpm: download
 	  --define "_specdir %{_topdir}" \
 	  --define "_sourcedir  %{_topdir}/rpmbuild/SOURCES" \
 	  --define "VERSION $(version)" \
+ 	  --define "RELEASE $(release)" \
 	  -ba arrow-cpp.spec
