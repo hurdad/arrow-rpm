@@ -19,7 +19,6 @@ Apache Arrow is a columnar in-memory analytics layer designed to accelerate big 
 %package gpu
 Summary:	%{name} c++ gpu development package
 Group:		Development/Libraries
-AutoReqProv:    no
 
 %description gpu
 GPU C++ Shared Object files for %{name}.
@@ -27,7 +26,6 @@ GPU C++ Shared Object files for %{name}.
 %package parquet
 Summary:	%{name} c++ parquet development package
 Group:		Development/Libraries
-AutoReqProv:    no
 
 %description parquet
 Parquet C++ Shared Object files for %{name}.
