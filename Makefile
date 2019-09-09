@@ -1,5 +1,5 @@
 # arrow	 
-version = 0.11.0
+version = 0.14.1
 release = 1
 name = arrow
 full_name = $(name)-$(version)

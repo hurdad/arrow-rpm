@@ -16,11 +16,11 @@ BuildRequires:  cmake3
 %description
 Apache Arrow is a columnar in-memory analytics layer designed to accelerate big data.
 
-%package gpu
+%package cuda
 Summary:	%{name} c++ gpu development package
 Group:		Development/Libraries
 
-%description gpu
+%description cuda
 GPU C++ Shared Object files for %{name}.
 
 %package parquet
@@ -42,9 +42,9 @@ C++ Development files for %{name}.
 %setup -n arrow-apache-arrow-%{version}
 
 %build
-cd cpp && cmake3 -DCMAKE_BUILD_TYPE=Release -DARROW_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr -DARROW_GPU=ON -DARROW_PARQUET=ON && make %{?_smp_mflags}
+cd cpp && cmake3 -DCMAKE_BUILD_TYPE=Release -DARROW_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=/usr -DARROW_CUDA=ON -DARROW_PARQUET=ON && make %{?_smp_mflags}
 
-#%check
+%check
 #cd cpp && make unittest
 
 %install
@@ -60,10 +60,10 @@ ldconfig
 %postun
 ldconfig
 
-%post gpu
+%post cuda
 ldconfig
 
-%postun gpu
+%postun cuda
 ldconfig
 
 %post parquet
@@ -75,22 +75,23 @@ ldconfig
 %files
 %defattr(-,root,root,-)
 %doc README.md
-%{_libdir}/libarrow.so*
+%{_libdir}/libarrow.so.*
+%{_libdir}/libarrow_dataset.so.*
 
-%files gpu
+%files cuda
 %defattr(-,root,root,-)
-%{_libdir}/libarrow_gpu.so*
+%{_libdir}/libarrow_cuda.so.*
 
 %files parquet
 %defattr(-,root,root,-)
-%{_libdir}/libparquet.so*
+%{_libdir}/libparquet.so.*
 
 %files devel
 %defattr(-,root,root,-)
 %{_includedir}
-%{_libdir}/libarrow.a
-%{_libdir}/libarrow_gpu.a
-%{_libdir}/libparquet.a
+%{_libdir}/*.so
+%{_libdir}/*.a
 %{_libdir}/pkgconfig/*
+%{_libdir}/cmake/arrow/*
 
 %changelog
